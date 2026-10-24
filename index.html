@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ડાયરો કાઠિયાવાડી રસથાળ | ડિજિટલ મેનૂ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8B1E0F;
+      --primary-dark: #641206;
+      --accent: #E65100;
+      --bg: #F8F5F0;
+      --surface: #FFFFFF;
+      --text: #221A15;
+      --muted: #6C5F56;
+      --border: #E8DFD5;
+      --green: #2E7D32;
+      --gold: #D4AF37;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Vadodara', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 110px;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+      color: white;
+      text-align: center;
+      padding: 24px 16px 20px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 6px 16px rgba(110, 20, 10, 0.2);
+    }
+    .badge {
+      display: inline-block;
+      background: #1B5E20;
+      color: #E8F5E9;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    header p {
+      font-size: 12px;
+      opacity: 0.88;
+    }
+
+    /* TOP BUTTONS */
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 16px 8px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .action-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border: 1px solid transparent;
+    }
+    .btn-maps { background: #E8F0FE; color: #1967D2; border-color: #D2E3FC; }
+    .btn-review { background: #FEF7E0; color: #B06000; border-color: #FEEFC3; }
+
+    /* SEARCH BAR */
+    .search-wrap {
+      max-width: 500px;
+      margin: 8px auto 4px;
+      padding: 0 16px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 14px;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    /* CATEGORIES TABS */
+    .cat-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+    }
+    .cat-bar::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .cat-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* FOOD LIST */
+    .menu-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 8px 16px;
+    }
+    .section-label {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 18px 0 8px;
+    }
+    .food-card {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .food-details h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .food-details p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .food-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
+    /* QUANTITY BUTTONS */
+    .action-control {
+      text-align: right;
+      min-width: 85px;
+    }
+    .btn-initial-add {
+      background: #FFF5F5;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      padding: 5px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .qty-counter {
+      display: none;
+      align-items: center;
+      background: var(--primary);
+      border-radius: 20px;
+      color: white;
+      overflow: hidden;
+    }
+    .qty-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .qty-number {
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* FLOATING BOTTOM BAR */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+      z-index: 20;
+    }
+    .bottom-inner {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bill-summary {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .bill-summary strong {
+      font-size: 18px;
+      color: var(--text);
+      display: block;
+    }
+    .btn-view-cart {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 22px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* CART MODAL SHEET */
+    .sheet-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 30;
+      display: none;
+      align-items: flex-end;
+    }
+    .sheet-content {
+      background: var(--surface);
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 20px 16px 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .sheet-header h2 {
+      font-size: 18px;
+      color: var(--primary);
+    }
+    .sheet-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .order-input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin: 8px 0;
+      font-size: 13px;
+    }
+    .btn-confirm-wa {
+      width: 100%;
+      background: #25D366;
+      color: white;
+      padding: 12px;
+      border-radius: 24px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- RESTAURANT HEADER -->
+  <header>
+    <div class="badge">● 100% શુદ્ધ શાકાહારી</div>
+    <h1>ડાયરો કાઠિયાવાડી રસથાળ</h1>
+    <p>અશોક શિલાલેખ સામે, ભવનાથ તળેટી રોડ, જુનાગઢ</p>
+  </header>
+
+  <!-- QUICK SHORTCUTS -->
+  <div class="top-actions">
+    <a href="https://maps.google.com" target="_blank" class="action-btn btn-maps">📍 ગૂગલ મેપ્સ લોકેશન</a>
+    <a href="https://search.google.com/local/writereview" target="_blank" class="action-btn btn-review">⭐ 5-Star રિવ્યૂ આપો</a>
+  </div>
+
+  <!-- SEARCH INPUT -->
+  <div class="search-wrap">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 આઇટમ શોધો... (દા.ત. રોટલો, ઓળો, Thali)" onkeyup="filterItems()">
+  </div>
+
+  <!-- CATEGORY PILLS -->
+  <div class="cat-bar">
+    <button class="cat-pill active" onclick="setCategory('all')">બધું (All)</button>
+    <button class="cat-pill" onclick="setCategory('thali')">કાઠિયાવાડી થાળી</button>
+    <button class="cat-pill" onclick="setCategory('sabzi')">સ્પેશિયલ શાક</button>
+    <button class="cat-pill" onclick="setCategory('rotla')">રોટલા & રોટલી</button>
+    <button class="cat-pill" onclick="setCategory('drinks')">પીણાં & અન્ય</button>
+  </div>
+
+  <!-- MENU LIST -->
+  <div class="menu-container" id="menuList">
+    <!-- Populated by JavaScript -->
+  </div>
+
+  <!-- BOTTOM CHECKOUT BAR -->
+  <div class="bottom-bar">
+    <div class="bottom-inner">
+      <div class="bill-summary">
+        કુલ આઇટમ્સ: <span id="cartCount">0</span>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+      <button class="btn-view-cart" onclick="openCartModal()">
+        ઓર્ડર આગળ વધારો →
+      </button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="sheet-overlay" id="cartModal">
+    <div class="sheet-content">
+      <div class="sheet-header">
+        <h2>તમારો ઓર્ડર</h2>
+        <button class="sheet-close" onclick="closeCartModal()">✕</button>
+      </div>
+      <div id="modalItemsList" style="margin-bottom: 12px; font-size: 14px;"></div>
+      
+      <label style="font-size: 12px; font-weight: 600;">ટેબલ નંબર (Table No.):</label>
+      <input type="text" id="tableNo" class="order-input" placeholder="દા.ત. Table 4 અથવા પાર્સલ">
+
+      <label style="font-size: 12px; font-weight: 600;">ખાસ સૂચના (Special Instructions):</label>
+      <input type="text" id="specialNotes" class="order-input" placeholder="દા.ત. ઓછું તીખું, માખણ વધારે">
+
+      <button class="btn-confirm-wa" onclick="sendOrderToWhatsApp()">
+        WhatsApp પર ઓર્ડર મોકલો
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Dayro Kathiyawadi Rasthal Food Dataset
+    const menuItems = [
+      { id: 1, cat: 'thali', name: 'અનલિમિટેડ કાઠિયાવાડી થાળી', en: 'unlimited kathiyawadi thali', price: 180, desc: '૨ શાક, દાળ-ભાત, કઢી-ખીચડી, રોટલા/રોટલી, છાશ, પાપડ, સલાડ' },
+      { id: 2, cat: 'thali', name: 'સ્પેશિયલ ડાયરો થાળી (સ્વીટ સાથે)', en: 'special dayro thali with sweet', price: 220, desc: 'અનલિમિટેડ કાઠિયાવાડી થાળી + ગુલાબ જાંબુ અથવા મોહનથાળ' },
+      { id: 3, cat: 'sabzi', name: 'રીંગણનો ઓળો (ભડથું)', en: 'ringan no oro bhadthu', price: 120, desc: 'સ્મોકી કાઠિયાવાડી દેશી લાલ રીંગણનો ઓળો' },
+      { id: 4, cat: 'sabzi', name: 'સેવ ટમેટાનું શાક', en: 'sev tameta nu shaak', price: 100, desc: 'કાઠિયાવાડી તીખો-મીઠો સ્વાદિષ્ટ રસો' },
+      { id: 5, cat: 'sabzi', name: 'લસણીયા બટેકા', en: 'lasaniya bateta potato garlic', price: 110, desc: 'લાલ મરચાં અને લસણના સ્પેશિયલ વઘાર સાથે' },
+      { id: 6, cat: 'sabzi', name: 'કાજુ ગાંઠિયા શાક', en: 'kaju gathiya shaak', price: 160, desc: 'સ્પેશિયલ કાઠિયાવાડી મસાલા ગ્રેવી' },
+      { id: 7, cat: 'rotla', name: 'બાજરાનો રોટલો (દેશી માખણ સાથે)', en: 'bajra no rotlo butter makhan', price: 40, desc: 'ગરમાગરમ દેશી ચૂલા પર શેકેલો રોટલો' },
+      { id: 8, cat: 'rotla', name: 'વઘારેલો રોટલો', en: 'vagharelo rotlo dahi garlic', price: 90, desc: 'ખાટી છાશ, લસણ અને મરચાંના વઘાર સાથે' },
+      { id: 9, cat: 'rotla', name: 'તવા રોટલી (ઘી વાળી)', en: 'tawa roti ghee fulka', price: 15, desc: 'ઘઉંની નરમ ગરમ ફૂલકા રોટલી' },
+      { id: 10, cat: 'drinks', name: 'દેશી મસાલા છાશ', en: 'masala chhash buttermilk', price: 20, desc: 'શેકેલા જીરું અને ફુદીના સાથે ઠંડી છાશ' },
+      { id: 11, cat: 'drinks', name: 'ગુલાબ જાંબુ (૨ નંગ)', en: 'gulab jamun sweet', price: 50, desc: 'શુદ્ધ દેશી ઘીના ગરમ ગુલાબ જાંબુ' }
+    ];
+
+    let cart = {}; // { itemId: quantity }
+    let currentCategory = 'all';
+    // Counter WhatsApp number
+    const hotelWhatsApp = "919876543210"; 
+
+    function renderMenu() {
+      const container = document.getElementById('menuList');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      container.innerHTML = '';
+
+      const filtered = menuItems.filter(item => {
+        const matchesCat = (currentCategory === 'all' || item.cat === currentCategory);
+        const matchesSearch = item.name.toLowerCase().includes(search) || item.en.toLowerCase().includes(search);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p style="text-align:center; padding: 30px; color:#999;">કોઈ આઇટમ મળી નથી.</p>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const qty = cart[item.id] || 0;
+        const card = document.createElement('div');
+        card.className = 'food-card';
+        card.innerHTML = `
+          <div class="food-details">
+            <h3>${item.name}</h3>
+            <p>${item.desc}</p>
+            <div class="food-price">₹${item.price}</div>
+          </div>
+          <div class="action-control">
+            <button class="btn-initial-add" id="addBtn-${item.id}" style="display: ${qty > 0 ? 'none' : 'inline-block'}" onclick="changeQty(${item.id}, 1)">
+              + ઉમેરો
+            </button>
+            <div class="qty-counter" id="counter-${item.id}" style="display: ${qty > 0 ? 'inline-flex' : 'none'}">
+              <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+              <span class="qty-number" id="qtyVal-${item.id}">${qty}</span>
+              <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function changeQty(id, delta) {
+      cart[id] = (cart[id] || 0) + delta;
+      if (cart[id] <= 0) delete cart[id];
+
+      // Update item UI
+      const count = cart[id] || 0;
+      const addBtn = document.getElementById(`addBtn-${id}`);
+      const counter = document.getElementById(`counter-${id}`);
+      const qtyVal = document.getElementById(`qtyVal-${id}`);
+
+      if (addBtn && counter && qtyVal) {
+        if (count > 0) {
+          addBtn.style.display = 'none';
+          counter.style.display = 'inline-flex';
+          qtyVal.innerText = count;
+        } else {
+          addBtn.style.display = 'inline-block';
+          counter.style.display = 'none';
+        }
+      }
+
+      updateTotals();
+    }
+
+    function updateTotals() {
+      let totalQty = 0;
+      let totalPrice = 0;
+      for (const id in cart) {
+        const item = menuItems.find(i => i.id == id);
+        if (item) {
+          totalQty += cart[id];
+          totalPrice += item.price * cart[id];
+        }
+      }
+      document.getElementById('cartCount').innerText = totalQty;
+      document.getElementById('cartTotal').innerText = '₹' + totalPrice;
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderMenu();
+    }
+
+    function filterItems() {
+      renderMenu();
+    }
+
+    function openCartModal() {
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        alert("કૃપા કરીને પહેલા મેનૂમાંથી કોઈ આઇટમ પસંદ કરો.");
+        return;
+      }
+      let html = '<ul style="list-style:none; padding:0;">';
+      let total = 0;
+      keys.forEach(id => {
+        const item = menuItems.find(i => i.id == id);
+        const sub = item.price * cart[id];
+        total += sub;
+        html += `<li style="display:flex; justify-content:space-between; padding: 4px 0; border-bottom: 1px dashed #eee;">
+          <span>${item.name} × ${cart[id]}</span>
+          <strong>₹${sub}</strong>
+        </li>`;
+      });
+      html += `</ul><div style="display:flex; justify-content:space-between; margin-top:8px; font-weight:700; font-size:16px;">
+        <span>કુલ રકમ:</span>
+        <span style="color:var(--primary);">₹${total}</span>
+      </div>`;
+      document.getElementById('modalItemsList').innerHTML = html;
+      document.getElementById('cartModal').style.display = 'flex';
+    }
+
+    function closeCartModal() {
+      document.getElementById('cartModal').style.display = 'none';
+    }
+
+    function sendOrderToWhatsApp() {
+      const table = document.getElementById('tableNo').value.trim() || 'કાઉન્ટર / ડાઇનિંગ';
+      const notes = document.getElementById('specialNotes').value.trim() || 'કંઈ નહીં';
+      let lines = [];
+      let total = 0;
+
+      for (const id in cart) {
+        const item = menuItems.find(i => i.id == id);
+        const sub = item.price * cart[id];
+        total += sub;
+        lines.push(`• ${item.name} × ${cart[id]} = ₹${sub}`);
+      }
+
+      const text = `*નવો ઓર્ડર - ડાયરો કાઠિયાવાડી રસથાળ*%0A` +
+        `---------------------------%0A` +
+        `📍 *ટેબલ / ઓર્ડર:* ${table}%0A` +
+        `📝 *સૂચના:* ${notes}%0A` +
+        `---------------------------%0A` +
+        lines.join('%0A') + `%0A` +
+        `---------------------------%0A` +
+        `*કુલ બિલ: ₹${total}*%0A%0A` +
+        `કૃપા કરીને ઓર્ડર કન્ફર્મ કરશો.`;
+
+      window.open(`https://wa.me/${hotelWhatsApp}?text=${text}`, '_blank');
+      closeCartModal();
+    }
+
+    // Initialize
+    renderMenu();
+  </script>
+</body>
+</html>
